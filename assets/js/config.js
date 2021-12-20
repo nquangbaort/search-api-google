@@ -1,0 +1,12 @@
+const API_KEY = 'AIzaSyAeO1RfNIfN9vSCGIJuFR4Fe92tLKa2wtg'
+const CX = 'ff75a42a0f1c42ba4'
+const URL_API = 'https://customsearch.googleapis.com/customsearch/v1/'
+const COUNT_RESULT = 10
+const urlSearchParams = new URLSearchParams(window.location.search)
+const NAME_FILE_CSV = 'data_search'
+const Lang_lr = 'lang_ja'
+const Lang_hl = 'jp'
+const Lang_gl = 'jp'
+const TITLE_PAGE = 'VAIX'
+const COPY_RIGHT = 'VAIXGROUP'
+const DATE = new Date().getFullYear().toString()

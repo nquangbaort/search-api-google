@@ -1,0 +1,32 @@
+
+.card a:hover{
+  text-decoration: underline;
+}
+.card{
+  width: 100%;
+  margin-bottom: 30px;
+  font-size: .9em;
+}
+.card:hover{
+  background-color: lightgray;
+}
+.imgcard{
+  display:inline-block;
+  padding-left: 20px;
+  height: 240px;
+}
+.imgcard img{
+  float:left;
+  width: 200px;
+  height: 200px;
+  margin: 20px;
+}
+.imgcard:hover{
+  background-color: lightgray;
+}
+.siteBaslik{
+  font-size: 1.5em;
+}
+.b-pagination{
+  margin-bottom: 4rem;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>VAIX</title>
+    <link type="text/css" rel="stylesheet" href="bootstrap/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="bootstrap/bootstrap-vue.css"/>
+    <script src="vue/vue.js"></script>
+    <script src="bootstrap/bootstrap-vue.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div id="app">
+        <div class="container pt-4">
+            <h1>Custom Search API</h1>
+            <div class="row height">
+                <div class="col-md-12">
+                    <form ref="form">
+                        <div class="input-group my-3">
+                            <input type="text" v-model="query" name="q" class="form-control" placeholder="VAIXGROUP">
+                            <input type="hidden" v-model="currentPage" name="page">
+                            <div class="input-group-append">
+                              <button class="btn btn-primary" type="submit" @click="submit">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <b-alert variant="danger" v-if="errorMessage" show>{{ errorMessage }}</b-alert>
+            <br>
+            <div v-if="items.length">
+                <div v-for="item in items" :key="item.title" class="card px-3">
+                    <br>
+                    <a v-bind:href="item.link" target="_blank"> <b class="siteBaslik">{{item.title}}</b> </a> <br>
+                    <span>{{item.snippet}}</span> <br>
+                    <a v-bind:href="item.link" target="_blank"> {{item.link}}  </a> <br>
+                </div>
+                <b-pagination size="md" :total-rows="totalItems"  @click.native="submit" align="center"  v-model="currentPage" :per-page="perPage"></b-pagination>
+            </div> 
+            <div class="footer fixed-bottom   py-1  text-center bg-dark">
+                <strong class="text-white">Copy Right {{ copyRight }} {{ date }} </strong>
+            </div>
+        </div>
+    </div>
+    <script src="axios/axios.min.js"></script>
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/search.js"></script>
+</body>
+</html>
