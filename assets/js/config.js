@@ -1,4 +1,4 @@
-const API_KEY = 'AIzaSyAeO1RfNIfN9vSCGIJuFR4Fe92tLKa2wtg'
+const API_KEY = 'AIzaSyDSTVS2FQ8ybvnRX-08zoDUwOqcBBa5NQk'
 const CX = 'ff75a42a0f1c42ba4'
 const URL_API = 'https://customsearch.googleapis.com/customsearch/v1/'
 const COUNT_RESULT = 10
@@ -10,3 +10,4 @@ const Lang_gl = 'jp'
 const TITLE_PAGE = 'VAIX'
 const COPY_RIGHT = 'VAIXGROUP'
 const DATE = new Date().getFullYear().toString()
+const LIMIT_RESULT = 50

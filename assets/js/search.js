@@ -9,11 +9,10 @@ const app = new Vue({
             perPage: 10,
             totalItems: 0,
             currentPage: urlSearchParams.get('page') ? parseInt(urlSearchParams.get('page')) : 1,
-            csvdata : [],
             form : null,
             date : DATE,
             copyRight : COPY_RIGHT,
-            errorMessage : null
+            errorMessage : null,
         }
     },
     created(){
@@ -24,42 +23,57 @@ const app = new Vue({
         submit(){
             this.$refs.form.submit()
         },
-        async search(keyword = '' , start = 1,img=undefined){
-            var url = new URL(URL_API)
-            var params = {
+        getQueryParams(start){
+            return {
                 key: API_KEY,
                 cx: CX,
-                q: keyword,
+                q: this.query,
                 gl: Lang_gl,
                 hl: Lang_hl,
                 lr: Lang_lr,
-                start : img ? start*COUNT_RESULT :start
+                start : start,
+                num : COUNT_RESULT
             }
-            url.search = new URLSearchParams(params).toString();
+        },
+        search(keyword = '' , start = 1,img=undefined){
+            var url = new URL(URL_API)
+            url.search = new URLSearchParams(this.getQueryParams(start)).toString();
             if (keyword && keyword !== '') {
-                const data = await axios.get(url).then(Response =>{
+                const data =  axios.get(url).then(Response =>{
                     const totalItems = parseInt(Math.ceil(Response.data.searchInformation.totalResults / COUNT_RESULT))
                     this.currentPage = start
                     this.totalItems = totalItems
-                    this.csvdata = Response.data.items
                     this.items = Response.data.items
-                    this.downloadCSVData()
+
                 }).catch(error => {
-                    console.log(error.data.error.message);
                     this.errorMessage = error.data.error.message
                 })
-            }          
+               this.getAllData()
+            }
         },
-        downloadCSVData(){
+       async getAllData(){
+            const result  = []
+            for(let i = 1; i <= LIMIT_RESULT ; i++){
+                var url = new URL(URL_API)
+                url.search = new URLSearchParams(this.getQueryParams(i)).toString();
+                const data = await axios.get(url).then(Response =>{
+                    result.push(Response.data.items)
+                })
+            }
+            const merged = [].concat.apply([], result);
+            this.downloadCSVData(merged)
+        },
+        downloadCSVData(data = [] ){
             const rows = [['title', 'link']];
-            for (var i = 0; i < this.csvdata.length; i++) {
-                var item = this.csvdata[i];
+            for (let i = 0; i < data.length; i++) {
+                const item = data[i]
+                console.log(item);
                 rows.push(['"' + item.title + '"','"' + item.link + '"']);
             }
             let csvContent = "data:text/csv;charset=utf-8,";
             rows.forEach(function(rowArray) {
-                    let row = rowArray.join(",");
-                    csvContent += row + "\r\n";
+                let row = rowArray.join(",");
+                csvContent += row + "\r\n";
             })
             var encodedUri = encodeURI(csvContent);
             var link = document.createElement("a");
