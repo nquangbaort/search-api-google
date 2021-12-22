@@ -15,7 +15,7 @@ const app = new Vue({
             errorMessage : null,
         }
     },
-    created(){
+    created() {
         document.title = this.query ? TITLE_PAGE + '-' + this.query : TITLE_PAGE
         this.search(this.query , this.currentPage)
     },
@@ -35,32 +35,39 @@ const app = new Vue({
                 num : COUNT_RESULT
             }
         },
-        search(keyword = '' , start = 1,img=undefined){
+        search(keyword = '' , start = 1, img=undefined){
             var url = new URL(URL_API)
             url.search = new URLSearchParams(this.getQueryParams(start)).toString();
             if (keyword && keyword !== '') {
-                const data =  axios.get(url).then(Response =>{
-                    const totalItems = parseInt(Math.ceil(Response.data.searchInformation.totalResults / COUNT_RESULT))
-                    this.currentPage = start
-                    this.totalItems = totalItems
-                    this.items = Response.data.items
+                // const data =  axios.get(url).then(Response =>{
+                //     const totalItems = parseInt(Math.ceil(Response.data.searchInformation.totalResults / COUNT_RESULT))
+                //     this.currentPage = start
+                //     this.totalItems = totalItems
+                //     this.items = Response.data.items
 
-                }).catch(error => {
-                    this.errorMessage = error.data.error.message
-                })
+                // }).catch(error => {
+                //     this.errorMessage = error.data.error.message
+                //     console.log(error)
+                // })
                this.getAllData()
             }
         },
        async getAllData(){
             const result  = []
-            for(let i = 1; i <= LIMIT_RESULT ; i++){
-                var url = new URL(URL_API)
-                url.search = new URLSearchParams(this.getQueryParams(i)).toString();
-                const data = await axios.get(url).then(Response =>{
-                    result.push(Response.data.items)
-                })
+            try{
+                for(let i = 1; i <= LIMIT_RESULT ; i++){
+                    var url = new URL(URL_API)
+                    url.search = new URLSearchParams(this.getQueryParams(i)).toString();
+                    const data = await axios.get(url).then(Response =>{
+                        result.push(Response.data.items)
+                    })
+                    await this.sleep(1000);
+                }
+            } catch(error) {
+                console.log(error)
             }
             const merged = [].concat.apply([], result);
+            this.items = merged;    // display all result
             this.downloadCSVData(merged)
         },
         downloadCSVData(data = [] ){
@@ -82,6 +89,9 @@ const app = new Vue({
             document.body.appendChild(link);
             link.click();
             link.remove();
+        },
+        sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
         }
     }
 })
