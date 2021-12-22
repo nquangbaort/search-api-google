@@ -10,4 +10,4 @@ const Lang_gl = 'jp'
 const TITLE_PAGE = 'VAIX'
 const COPY_RIGHT = 'VAIXGROUP'
 const DATE = new Date().getFullYear().toString()
-const LIMIT_RESULT = 50
+const LIMIT_RESULT = 100

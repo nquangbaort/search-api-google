@@ -31,13 +31,14 @@
             </div>
             <b-alert variant="danger" v-if="errorMessage" show>{{ errorMessage }}</b-alert>
             <br>
-            <div v-if="items.length">
+            
                 <div v-for="item in items" :key="item.title" class="card px-3">
                     <br>
                     <a v-bind:href="item.link" target="_blank"> <b class="siteBaslik">{{item.title}}</b> </a> <br>
                     <span>{{item.snippet}}</span> <br>
                     <a v-bind:href="item.link" target="_blank"> {{item.link}}  </a> <br>
                 </div>
+            <div v-if="items.length">
                 <b-pagination size="md" :total-rows="totalItems"  @click.native="submit" align="center"  v-model="currentPage" :per-page="perPage"></b-pagination>
             </div> 
             <div class="footer fixed-bottom  py-1  text-center bg-dark">
