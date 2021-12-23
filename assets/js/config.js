@@ -1,6 +1,6 @@
 const API_KEY = 'AIzaSyDSTVS2FQ8ybvnRX-08zoDUwOqcBBa5NQk'
 const CX = 'ff75a42a0f1c42ba4'
-const URL_API = 'https://customsearch.googleapis.com/customsearch/v1/'
+const URL_API = 'https://serpapi.com/search.json?'
 const COUNT_RESULT = 10
 const urlSearchParams = new URLSearchParams(window.location.search)
 const NAME_FILE_CSV = 'data_search'

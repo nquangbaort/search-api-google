@@ -25,32 +25,24 @@ const app = new Vue({
         },
         getQueryParams(start){
             return {
-                key: API_KEY,
-                cx: CX,
                 q: this.query,
-                gl: Lang_gl,
-                hl: Lang_hl,
-                lr: Lang_lr,
-                start : start,
-                num : COUNT_RESULT
+                api_key : 'c85b85d83906a6e3b418af940d58b706dc08520e8456f2c0e8be907c967a8a4f',
+                start : 1,
+                num : 10
             }
         },
         search(keyword = '' , start = 1, img=undefined){
             var url = new URL(URL_API)
             url.search = new URLSearchParams(this.getQueryParams(start)).toString();
             if (keyword && keyword !== '') {
-                const data =  axios.get(url).then(Response =>{
-                    const totalItems = parseInt(Math.ceil(Response.data.searchInformation.totalResults / COUNT_RESULT))
-                    this.currentPage = start
-                    this.totalItems = totalItems
-                    this.items = Response.data.items
-                    this.downloadCSVData(Response.data.items )
-
-                }).catch(error => {
-                    this.errorMessage = error.data.error.message
-                    console.log(error)
-                })
-                
+                fetch(url , {
+                    mode: 'cors',
+                    headers: {
+                        "accept" : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+                        "user-agent" : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36',
+                        "credentials": "same-origin"
+                    }
+                }).then(response => response.json()).then(data => console.log(data))
             //    this.getAllData()
             }
         },
