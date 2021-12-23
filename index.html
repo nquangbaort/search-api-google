@@ -31,7 +31,7 @@
             </div>
             <b-alert variant="danger" v-if="errorMessage" show>{{ errorMessage }}</b-alert>
             <br>
-            <div v-if="items.length"></div>
+            <div v-if="items.length">
                 <div v-for="item in items" :key="item.title" class="card px-3">
                     <br>
                     <a v-bind:href="item.link" target="_blank"> <b class="siteBaslik">{{item.title}}</b> </a> <br>
