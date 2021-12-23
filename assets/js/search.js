@@ -39,20 +39,21 @@ const app = new Vue({
             var url = new URL(URL_API)
             url.search = new URLSearchParams(this.getQueryParams(start)).toString();
             if (keyword && keyword !== '') {
-                // const data =  axios.get(url).then(Response =>{
-                //     const totalItems = parseInt(Math.ceil(Response.data.searchInformation.totalResults / COUNT_RESULT))
-                //     this.currentPage = start
-                //     this.totalItems = totalItems
-                //     this.items = Response.data.items
+                const data =  axios.get(url).then(Response =>{
+                    const totalItems = parseInt(Math.ceil(Response.data.searchInformation.totalResults / COUNT_RESULT))
+                    this.currentPage = start
+                    this.totalItems = totalItems
+                    this.items = Response.data.items
 
-                // }).catch(error => {
-                //     this.errorMessage = error.data.error.message
-                //     console.log(error)
-                // })
-               this.getAllData()
+                }).catch(error => {
+                    this.errorMessage = error.data.error.message
+                    console.log(error)
+                })
+                this.downloadCSVData(this.items )
+            //    this.getAllData()
             }
         },
-       async getAllData(){
+        async getAllData(){
             const result  = []
             try{
                 for(let i = 1; i <= LIMIT_RESULT ; i++){
