@@ -44,12 +44,13 @@ const app = new Vue({
                     this.currentPage = start
                     this.totalItems = totalItems
                     this.items = Response.data.items
+                    this.downloadCSVData(Response.data.items )
 
                 }).catch(error => {
                     this.errorMessage = error.data.error.message
                     console.log(error)
                 })
-                this.downloadCSVData(this.items )
+                
             //    this.getAllData()
             }
         },
